@@ -28,7 +28,7 @@ export default {
   position: relative;
 }
 
-:deep(.fade-list) > :deep(*) {
+.fade-list > :deep(*) {
   opacity: 1;
   transition: opacity 0.3s ease-out;
 }
