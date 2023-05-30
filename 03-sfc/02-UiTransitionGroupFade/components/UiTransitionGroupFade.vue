@@ -1,8 +1,11 @@
 <template>
-  <TransitionGroup :tag="tag" name="fade-list" class="fade-list">
-    <slot />
+  <TransitionGroup :tag="tag"  name="fade-list" class="fade-list">
+
+        <slot />
+
   </TransitionGroup>
 </template>
+
 
 <script>
 export default {
@@ -16,6 +19,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 /* _transitions.css */
