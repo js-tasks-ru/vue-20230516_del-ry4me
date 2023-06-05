@@ -1,21 +1,31 @@
-<template>
-  <div class="dropdown dropdown_opened">
-    <button type="button" class="dropdown__toggle dropdown__toggle_icon">
-      <UiIcon icon="tv" class="dropdown__icon" />
-      <span>Title</span>
+<template >
+  <div :class="['dropdown', {'dropdown_opened': isActive}]" >
+    <button @click="menuToggle" type="button"
+            :class="['dropdown__toggle', {'dropdown__toggle_icon': isIcon}]">
+      <UiIcon v-if="ooo.icon" :icon="ooo.icon" class="dropdown__icon" />
+      <span>{{ ooo.text? ooo.text: title }}</span>
     </button>
 
-    <div class="dropdown__menu" role="listbox">
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <UiIcon icon="tv" class="dropdown__icon" />
-        Option 1
+    <div v-show="isActive" class="dropdown__menu" role="listbox">
+      <button v-for="(option, index) in options" :key="index"
+              @click="menuClose(option)"
+              :class="['dropdown__item', {'dropdown__item_icon': isIcon}]"
+              role="option"
+              type="button">
+        <UiIcon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
+        {{ option.text }}
       </button>
-      <button class="dropdown__item dropdown__item_icon" role="option" type="button">
-        <UiIcon icon="tv" class="dropdown__icon" />
-        Option 2
-      </button>
+
+
     </div>
   </div>
+  <select v-show="false" @change="selectMethod($event.target.value)" >
+    <option v-if="modelValue" :value="ooo.value" :text="ooo.text"></option>
+    <option v-for="(option, index) in options" :key="index"
+      :value="option.value"
+      :text="option.text" >
+    </option>
+  </select>
 </template>
 
 <script>
@@ -25,6 +35,76 @@ export default {
   name: 'UiDropdown',
 
   components: { UiIcon },
+
+  data() {
+    return {
+      isActive: false,
+      isIcon: false,
+      ooo: {value: '', text: '', icon: ''},
+    }
+  },
+
+  watch: {
+    modelValue() {
+      this.options.forEach(option => {
+        if (option.value == this.modelValue) {
+          return this.ooo = option;
+        }
+      })
+    },
+    options() {
+      this.searchIcon();
+    }
+  },
+
+  methods: {
+    menuToggle() {
+      this.isActive = !this.isActive;
+    },
+    searchIcon() {
+      this.options.forEach(option => {
+        if (option.icon) {
+          return this.isIcon = true;
+        }})
+    },
+    menuClose(option) {
+      this.isActive = false;
+      this.$emit('update:modelValue', option.value)
+    },
+    oooSelect() {
+      this.options.forEach(option => {
+        if (option.value == this.modelValue) {
+          return this.ooo = option;
+        }
+      })
+    },
+    selectMethod(value) {
+      this.$emit('update:modelValue', value);
+    }
+  },
+
+  props: {
+    options: {
+      type: Array,
+      required: true
+    },
+
+    title: {
+      type: String,
+      required: true
+    },
+    modelValue: {
+      type:String,
+    }
+  },
+
+  emits: ['update:modelValue'],
+
+
+  beforeMount() {
+    this.oooSelect();
+    this.searchIcon()
+  }
 };
 </script>
 

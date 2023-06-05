@@ -2,9 +2,9 @@
   <div class="calendar-view">
     <div class="calendar-view__controls">
       <div class="calendar-view__controls-inner">
-        <button class="calendar-view__control-left" type="button" aria-label="Previous month"></button>
-        <div class="calendar-view__date">Декабрь 2022 г.</div>
-        <button class="calendar-view__control-right" type="button" aria-label="Next month"></button>
+        <button @click="month - 1" class="calendar-view__control-left" type="button" aria-label="Previous month"></button>
+        <div class="calendar-view__date">{{ month }}</div>
+        <button @click="month + 1" class="calendar-view__control-right" type="button" aria-label="Next month"></button>
       </div>
     </div>
 
@@ -164,10 +164,33 @@
 export default {
   name: 'MeetupsCalendar',
 
+  data() {
+    return{
+      date: new Date,
+      month: this.date.getMonth()
+    }
+  },
+
   props: {
     meetups: {
       type: Array,
       required: true,
+    },
+  },
+
+  watch: {
+    month() {
+      return this.month;
+    }
+  },
+
+  methods: {
+    localDate(n) {
+        const d = new Date(this.date).toLocaleString(navigator.language, {
+        year: 'numeric',
+        month: 'long',
+      });
+      return d.getMonth() + n;
     },
   },
 };
