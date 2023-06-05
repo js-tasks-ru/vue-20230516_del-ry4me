@@ -50,12 +50,6 @@ import { addDays, addMonths, getFirstDateOfMonth, getLastDateOfMonth, getWeekday
 export default {
   name: 'MeetupsCalendar',
 
-  data() {
-    return{
-      date: new Date,
-    }
-  },
-
   props: {
     meetups: {
       type: Array,
