@@ -62,7 +62,7 @@ export default {
       type: Array,
       required: true,
     },
- 
+
   data() {
     return {
       currentDate: getFirstDateOfMonth(new Date()),
@@ -121,7 +121,9 @@ export default {
 
     },
   },
-};
+}
+
+}
 </script>
 
 <style scoped>
