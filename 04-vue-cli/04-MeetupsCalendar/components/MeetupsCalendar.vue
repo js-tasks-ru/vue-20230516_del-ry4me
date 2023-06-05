@@ -185,12 +185,12 @@ export default {
   },
 
   methods: {
-    localDate(n) {
+    localDate() {
         const d = new Date(this.date).toLocaleString(navigator.language, {
         year: 'numeric',
         month: 'long',
       });
-      return d.getMonth() + n;
+
     },
   },
 };
