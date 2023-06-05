@@ -53,7 +53,6 @@ export default {
   data() {
     return{
       date: new Date,
-      month: this.date.getMonth()
     }
   },
 
