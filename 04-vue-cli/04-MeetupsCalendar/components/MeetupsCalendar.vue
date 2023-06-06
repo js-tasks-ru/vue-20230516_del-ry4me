@@ -2,9 +2,9 @@
   <div class="calendar-view">
     <div class="calendar-view__controls">
       <div class="calendar-view__controls-inner">
-        <button @click="month - 1" class="calendar-view__control-left" type="button" aria-label="Previous month"></button>
+
         <div class="calendar-view__date">{{ localDate }}</div>
-        <button @click="month + 1" class="calendar-view__control-right" type="button" aria-label="Next month"></button>
+
         <button
           class="calendar-view__control-left"
           type="button"
