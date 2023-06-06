@@ -2,6 +2,9 @@
   <div class="calendar-view">
     <div class="calendar-view__controls">
       <div class="calendar-view__controls-inner">
+        <button @click="month - 1" class="calendar-view__control-left" type="button" aria-label="Previous month"></button>
+        <div class="calendar-view__date">{{ localDate }}</div>
+        <button @click="month + 1" class="calendar-view__control-right" type="button" aria-label="Next month"></button>
         <button
           class="calendar-view__control-left"
           type="button"
@@ -54,6 +57,7 @@ export default {
     meetups: {
       type: Array,
       required: true,
+    }
     },
 
   data() {
@@ -61,6 +65,12 @@ export default {
       currentDate: getFirstDateOfMonth(new Date()),
     };
   },
+ /* watch: {
+    month() {
+      return this.month;
+    }
+  },*/
+
 
   computed: {
     localDate() {
@@ -114,9 +124,9 @@ export default {
 
     },
   },
-}
+};
 
-}
+
 </script>
 
 <style scoped>
