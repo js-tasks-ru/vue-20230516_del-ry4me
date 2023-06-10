@@ -1,7 +1,7 @@
 <template >
   <div class="toasts">
     <div v-for="(toast, index) in toasts" :key=index >
-    <UiToast   :msg='toast.msg' :icon='toast.icon' :classname='toast.classname' @some-event="remove" />
+    <UiToast   :msg='toast.msg' :type="type" />
   </div>
 </div>
 
@@ -19,26 +19,28 @@ export default {
   data() {
     return {
       toasts: [],
+      type: '',
     }
   },
 
   watch: {
-    index(n) {
-      setTimeout(() => {this.toasts.splice(n, 1)}, 5000);
-    }
+    toasts:{
+      handler(oldVal, newVal) {
+      setTimeout(() => {newVal.splice(newVal.at(-1), 1)}, 4500);
+    },
+    deep: true,
+  }
   },
 
   methods: {
-    success(msg) {
-      this.toasts.push({msg: msg, icon: "check-circle", classname: "toast_success"});
+    success(msg, ) {
+      this.type = 'ok';
+      this.toasts.push({msg: msg, type: this.type});
     },
 
     error(msg) {
-      this.toasts.push({msg: msg, icon: "alert-circle", classname: "toast_error"});
-    },
-
-    remove(index) {
-      setTimeout(() => {this.toasts.splice(index, 1)}, 5000);
+      this.type = 'error';
+      this.toasts.push({msg: msg, type: this.type});
     },
   },
 

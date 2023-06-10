@@ -1,10 +1,19 @@
 <template>
-  <a class="tabs__tab tabs__tab_active" role="tab">Tab</a>
+  <RouterLink :to="to" class="tabs__tab" exactActiveClass="tabs__tab_active" role="tab">
+    <slot />
+  </RouterLink>
 </template>
 
 <script>
 export default {
   name: 'UiTabsLink',
+
+  props: {
+    to: {
+      type: [ String, Object ],
+      required: true,
+    },
+  }
 };
 </script>
 
@@ -36,3 +45,4 @@ export default {
   color: var(--blue);
 }
 </style>
+

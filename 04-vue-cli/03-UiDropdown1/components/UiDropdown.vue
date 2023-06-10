@@ -1,7 +1,7 @@
 <template >
   <div :class="['dropdown', {'dropdown_opened': isActive}]" >
     <button @click="menuToggle" type="button"
-            :class="['dropdown__toggle', {'dropdown__toggle_icon': isIcon}]">
+            class="dropdown__toggle" :class="{'dropdown__toggle_icon': isIcon}">
       <UiIcon v-if="ooo.icon" :icon="ooo.icon" class="dropdown__icon" />
       <span>{{ ooo.text? ooo.text: title }}</span>
     </button>
@@ -9,7 +9,7 @@
     <div v-show="isActive" class="dropdown__menu" role="listbox">
       <button v-for="(option, index) in options" :key="index"
               @click="menuClose(option)"
-              :class="['dropdown__item', {'dropdown__item_icon': isIcon}]"
+              class="dropdown__item" :class="{'dropdown__item_icon': isIcon}"
               role="option"
               type="button">
         <UiIcon v-if="option.icon" :icon="option.icon" class="dropdown__icon" />
@@ -52,32 +52,38 @@ export default {
         }
       })
     },
-    options() {
-      this.searchIcon();
-    }
-  },
-
-  methods: {
-    menuToggle() {
-      this.isActive = !this.isActive;
-    },
-    searchIcon() {
+   options: {
+    handler() {
       this.options.forEach(option => {
         if (option.icon) {
-          return this.isIcon = true;
-        }})
+          this.isIcon = true;
+        }
+      })
     },
-    menuClose(option) {
-      this.isActive = false;
-      this.$emit('update:modelValue', option.value)
-    },
-    oooSelect() {
+    immediate: true,
+   },
+   ooo: {
+    handler() {
       this.options.forEach(option => {
         if (option.value == this.modelValue) {
           return this.ooo = option;
         }
       })
     },
+    immediate: true,
+   }
+  },
+
+  methods: {
+    menuToggle() {
+      this.isActive = !this.isActive;
+    },
+
+    menuClose(option) {
+      this.isActive = false;
+      this.$emit('update:modelValue', option.value)
+    },
+
     selectMethod(value) {
       this.$emit('update:modelValue', value);
     }
@@ -99,12 +105,6 @@ export default {
   },
 
   emits: ['update:modelValue'],
-
-
-  beforeMount() {
-    this.oooSelect();
-    this.searchIcon()
-  }
 };
 </script>
 

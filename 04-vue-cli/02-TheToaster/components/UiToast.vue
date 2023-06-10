@@ -1,5 +1,5 @@
 <template>
-<div :class="['toast', classname]">
+<div class="toast" :class="classname" >
   <UiIcon class="toast__icon" :icon="icon" />
   <span>{{ msg }}</span>
 
@@ -16,7 +16,7 @@ export default {
   components: { UiIcon },
 
   props: {
-    classname: {
+    type: {
       type: String,
       required: true
     },
@@ -24,16 +24,15 @@ export default {
       type: String,
       required: true
     },
-    icon: {
-      type: String,
-      required: true
-    }
   },
 
-  emits: ['someEvent'],
-
-  mounted() {
-    this.$emit('someEvent')
+  computed: {
+    icon() {
+      return this.type === 'ok'? 'check-circle': 'alert-circle';
+    },
+    classname() {
+      return this.type === 'ok'? 'toast_success': 'toast_error';
+    }
   }
 
 };
